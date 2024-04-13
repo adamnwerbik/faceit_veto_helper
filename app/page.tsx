@@ -13,9 +13,6 @@ export default function Home() {
       <h1>Hello World</h1>
       <MatchInputURLForm submitFn={setRequestedMatchID} />
       <Results matchID={requestedMatchID}></Results>
-      <div>
-        <Test />
-      </div>
     </main>
   );
 }
