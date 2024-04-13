@@ -1,6 +1,7 @@
 "use client";
 import { useForm, SubmitHandler } from "react-hook-form";
 import React from "react";
+import { cleanFormInput } from "../helperFunctions/CleanFormInput";
 
 type Inputs = {
   matchroomID: string;
@@ -12,8 +13,8 @@ const MatchInputURLForm = (props: { submitFn: Function }) => {
     formState: { errors },
   } = useForm<Inputs>();
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    props.submitFn(data.matchroomID);
-    console.log(data);
+    props.submitFn(cleanFormInput(data.matchroomID));
+    console.log(cleanFormInput(data.matchroomID));
   };
   return (
     <form
