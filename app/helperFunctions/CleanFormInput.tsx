@@ -1,3 +1,4 @@
 export function cleanFormInput(userInput: string) {
-  return userInput.split("/").at(-2)?.replace("/", "");
+  //assumes input has no trailing /
+  return userInput.split("/").at(-1)?.replace("/", "");
 }
