@@ -1,5 +1,9 @@
 import React from "react";
 import useSWR from "swr";
+import {
+  fetchMatchAllUsersStats,
+  getPlayerStats,
+} from "../serverFunctions/GetInfo";
 
 const StatsVisualise = (props: { data: any }) => {
   const faction1IDs: any[] = [];
@@ -12,15 +16,32 @@ const StatsVisualise = (props: { data: any }) => {
     faction2IDs.push(p.player_id)
   );
 
-  const { data: playerMatches, isLoading, error } = useSWR("");
-  if (error) {
-    return <div>Error fetching player data - try again later</div>;
-  }
-  if (isLoading) {
-    return <div>Loading data</div>;
-  }
+  const {
+    data: dataFaction1,
+    isLoading: isLoadingFaction1,
+    error: isErrorFaction1,
+  } = useSWR(faction1IDs.toString(), fetchMatchAllUsersStats);
+  const {
+    data: dataFaction2,
+    isLoading: isLoadingFaction2,
+    error: isErrorFaction2,
+  } = useSWR(faction2IDs.toString(), fetchMatchAllUsersStats);
 
-  return <div>{JSON.stringify(faction1IDs)}</div>;
+  if (isErrorFaction1 || isErrorFaction2) {
+    return <div>Somethign went wrong</div>;
+  }
+  if (isLoadingFaction2 || isLoadingFaction2) {
+    return <div>Loading</div>;
+  }
+  if (dataFaction1 && dataFaction2) {
+    return (
+      <div className="flex flex-row">
+        <div className="w-96">A</div>
+        <div className="w-24">A</div>
+        <div>C</div>
+      </div>
+    );
+  }
 };
 
 export default StatsVisualise;

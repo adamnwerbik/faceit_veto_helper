@@ -20,15 +20,10 @@ export async function getMatchRoomInfo(matchID: string) {
   return data;
 }
 
-export async function getPlayerStats(
-  playerID: string,
-  game: string,
-  offset: number,
-  limit: number
-) {
+export async function getPlayerStats(playerID: string) {
   console.log(`Fetching data for player: ${playerID}`);
   const res = await fetch(
-    `https://open.faceit.com/data/v4/players/${playerID}/games/${game}/stats?offset=${offset}&limit=${limit}`,
+    `https://open.faceit.com/data/v4/players/${playerID}/games/${"cs2"}/stats?offset=${0}&limit=${100}`,
     {
       headers: {
         Authorization: `Bearer ${process.env.MYFACEITKEY}`,
@@ -43,12 +38,12 @@ export async function getPlayerStats(
   return data;
 }
 
-export async function fetchMatchAllUsersStats(matchData: string) {
+// Only fetch last 100; @TODO to fetch all
+export async function fetchMatchAllUsersStats(playerIDs: string) {
+  const ids = playerIDs.split(",");
   const factionMatchesData: any[] = [];
   await Promise.all(
-    JSON.parse(matchData).map(async (p: any) =>
-      factionMatchesData.push(await getPlayerStats(p.player_id, "cs2", 0, 100))
-    )
+    ids.map(async (p: any) => factionMatchesData.push(await getPlayerStats(p)))
   );
   return factionMatchesData;
 }
