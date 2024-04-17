@@ -4,41 +4,47 @@ import {
   fetchMatchAllUsersStats,
   getPlayerStats,
 } from "../serverFunctions/GetInfo";
+import { AnalyseData } from "../helperFunctions/AnalyseData";
 
-const StatsVisualise = (props: { data: any }) => {
-  const faction1IDs: any[] = [];
-  const faction2IDs: any[] = [];
+const StatsVisualise = (props: { data: any; factionToAnalyse: number }) => {
+  const factionIDs: any[] = [];
 
-  props.data.teams.faction1.roster.map((p: any) =>
-    faction1IDs.push(p.player_id)
-  );
-  props.data.teams.faction2.roster.map((p: any) =>
-    faction2IDs.push(p.player_id)
-  );
-
-  const {
-    data: dataFaction1,
-    isLoading: isLoadingFaction1,
-    error: isErrorFaction1,
-  } = useSWR(faction1IDs.toString(), fetchMatchAllUsersStats);
-  const {
-    data: dataFaction2,
-    isLoading: isLoadingFaction2,
-    error: isErrorFaction2,
-  } = useSWR(faction2IDs.toString(), fetchMatchAllUsersStats);
-
-  if (isErrorFaction1 || isErrorFaction2) {
-    return <div>Somethign went wrong</div>;
+  if (props.factionToAnalyse === 1) {
+    props.data.teams.faction1.roster.map((p: any) =>
+      factionIDs.push(p.player_id)
+    );
   }
-  if (isLoadingFaction2 || isLoadingFaction2) {
-    return <div>Loading</div>;
+  if (props.factionToAnalyse === 2) {
+    props.data.teams.faction2.roster.map((p: any) =>
+      factionIDs.push(p.player_id)
+    );
   }
-  if (dataFaction1 && dataFaction2) {
+
+  const { data, isLoading, error } = useSWR(
+    factionIDs.toString(),
+    fetchMatchAllUsersStats
+  );
+
+  if (error) {
+    return <div>Something went wrong</div>;
+  }
+  if (isLoading) {
+    return <div>Fetching match history...</div>;
+  }
+  if (data) {
+    const stats = AnalyseData(data);
     return (
-      <div className="flex flex-row">
-        <div className="w-96">A</div>
-        <div className="w-24">A</div>
-        <div>C</div>
+      <div className="w-96 mt-6">
+        {stats.map((e) =>
+          e[0].slice(0, 3) == "de_" ? (
+            <div className="w-96 border border-black rounded-md p-1 my-5">
+              {e[0]} - {e[1].gamesPlayed} -{" "}
+              {`${Math.round((e[1].gamesWon * 100) / e[1].gamesPlayed)}%`}
+            </div>
+          ) : (
+            ""
+          )
+        )}
       </div>
     );
   }

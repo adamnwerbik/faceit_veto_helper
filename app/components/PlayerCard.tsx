@@ -36,8 +36,8 @@ const PlayerCard = (props: { playerData: PlayerCardData }) => {
         <h3 className="font-bold">{props.playerData.game_player_name}</h3>
         <h4 className="italic">{props.playerData.nickname}</h4>
       </div>
-      <div className="w-24 h-24 font-bold flex flex-col items-center justify-center ">
-        {props.playerData.game_skill_level}
+      <div className="w-24 h-24 font-bold flex flex-col items-center justify-center pr-4 ">
+        LVL_{props.playerData.game_skill_level}
       </div>
     </div>
   );

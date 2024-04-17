@@ -11,7 +11,6 @@ const Results = (props: { matchID: string }) => {
   return props.matchID ? (
     <div>
       <MatchVisualise data={data} />
-      <StatsVisualise data={data} />
     </div>
   ) : (
     "No ID supplied"
