@@ -2,7 +2,7 @@
 
 export async function getMatchRoomInfo(matchID: string) {
   if (!matchID) {
-    return;
+    throw new Error("No link provided!");
   }
   const res = await fetch(
     `https://open.faceit.com/data/v4/matches/${matchID}`,

@@ -12528,7 +12528,6 @@ const factionDataToAnalyse = [
 
 const Test = () => {
   let statsHM = new Map();
-  statsHM.set("Jessie", { phone: "213-555-1234", address: "123 N 1st Ave" });
   factionDataToAnalyse.forEach((player) => {
     player.items.forEach((game) => {
       console.log(game.stats.Map);

@@ -1,7 +1,8 @@
 import React from "react";
 import useSWR from "swr";
 import { getMatchRoomInfo } from "../serverFunctions/GetInfo";
-import PlayerDataAnal from "./PlayerDataAnal";
+import StatsVisualise from "./StatsVisualise";
+import MatchVisualise from "./MatchVisualise";
 
 const Results = (props: { matchID: string }) => {
   const { data, error, isLoading } = useSWR(props.matchID, getMatchRoomInfo);
@@ -9,7 +10,8 @@ const Results = (props: { matchID: string }) => {
   if (isLoading) return <div>Loading data...</div>;
   return props.matchID ? (
     <div>
-      <PlayerDataAnal matchData={data} />
+      <MatchVisualise data={data} />
+      <StatsVisualise data={data} />
     </div>
   ) : (
     "No ID supplied"
