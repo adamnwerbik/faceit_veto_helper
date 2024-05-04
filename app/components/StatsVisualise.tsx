@@ -5,6 +5,8 @@ import {
   getPlayerStats,
 } from "../serverFunctions/GetInfo";
 import { AnalyseData } from "../helperFunctions/AnalyseData";
+import { RevolvingDot } from "react-loader-spinner";
+import { FadeLoader } from "react-spinners";
 
 const StatsVisualise = (props: { data: any; factionToAnalyse: number }) => {
   const factionIDs: any[] = [];
@@ -29,7 +31,14 @@ const StatsVisualise = (props: { data: any; factionToAnalyse: number }) => {
     return <div>Something went wrong</div>;
   }
   if (isLoading) {
-    return <div>Fetching match history...</div>;
+    return (
+      <div className="flex flex-col items-center">
+        <div>Fetching match history...</div>
+        <div>
+          <FadeLoader color="#ff5500" />
+        </div>
+      </div>
+    );
   }
   if (data) {
     const stats = AnalyseData(data);
