@@ -6,6 +6,7 @@ import {
 } from "../serverFunctions/GetInfo";
 import { AnalyseData } from "../helperFunctions/AnalyseData";
 import { FadeLoader } from "react-spinners";
+import MapCard from "./MapCard";
 
 const StatsVisualise = (props: { data: any; factionToAnalyse: number }) => {
   const factionIDs: any[] = [];
@@ -43,16 +44,12 @@ const StatsVisualise = (props: { data: any; factionToAnalyse: number }) => {
     const stats = AnalyseData(data);
     return (
       <div className="w-96 mt-6">
-        {stats.map((e) =>
-          e[0].slice(0, 3) == "de_" ? (
-            <div className="w-96 border border-black rounded-md p-1 my-5">
-              {e[0]} - {e[1].gamesPlayed} -{" "}
-              {`${Math.round((e[1].gamesWon * 100) / e[1].gamesPlayed)}%`}
-            </div>
-          ) : (
-            ""
-          )
-        )}
+        <div>Top Maps</div>
+        <div>
+          {stats.map((e) =>
+            e[0].slice(0, 3) == "de_" ? <MapCard data={e}></MapCard> : ""
+          )}
+        </div>
       </div>
     );
   }

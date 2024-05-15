@@ -8,20 +8,20 @@ const PlayerCard = (props: { playerData: PlayerCardData }) => {
     ssr: false,
   });
   return (
-    <div className="h-24 w-96 flex flex-row bg-gray-950 text-white border border-gray-300 rounded-md">
+    <div className="h-20 w-96 flex flex-row bg-gray-950 text-white border border-gray-300 rounded-md">
       <div className="w-1/3 h-full flex flex-col items-center justify-center relative">
         {props.playerData.avatar ? (
           <img
-            className="ml-5 p-2 h-20  rounded-full"
+            className="ml-5 p-2 h-16 w-16 rounded-full"
             src={props.playerData.avatar}
           />
         ) : (
           <img
-            className="ml-5 p-2 h-20  rounded-full"
+            className="ml-5 p-2 h-16 w-16  rounded-full"
             src="/defaultPlayerAvatar.png"
           />
         )}
-        {props.playerData.anticheat_required ? (
+        {props.playerData.anticheat_requiredREMOVE ? (
           <MdShield
             size={20}
             className="absolute bottom-1 left-[4.2rem]"
