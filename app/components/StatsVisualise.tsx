@@ -5,7 +5,6 @@ import {
   getPlayerStats,
 } from "../serverFunctions/GetInfo";
 import { AnalyseData } from "../helperFunctions/AnalyseData";
-import { RevolvingDot } from "react-loader-spinner";
 import { FadeLoader } from "react-spinners";
 
 const StatsVisualise = (props: { data: any; factionToAnalyse: number }) => {
